@@ -9,6 +9,7 @@ class TestClient: public QObject
 private slots:
     void getName();
     void addClientUser();
+    void addClientUser_data();
 };
 
 #endif // TESTCLIENT

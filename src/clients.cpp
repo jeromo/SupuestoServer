@@ -30,7 +30,7 @@ bool Clients::addClient (int identifier, string client, string user)
         return false;
 
     it = mapClientUser.find(identifier);
-    if (it2 != mapClientUser.end())
+    if (it != mapClientUser.end())
         return false;
 
     ClientUser aux;

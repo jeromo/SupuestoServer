@@ -11,6 +11,7 @@ class Clients
 {
 private:
     const int max_identifier = 250;
+    const int min_identifier = 1;
     struct ClientUser
     {
         string user;
