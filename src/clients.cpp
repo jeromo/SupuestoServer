@@ -24,7 +24,7 @@ string Clients::createClientName()
 
     return string(str);
 }
-bool Clients::addClient (int identifier, string client, string user)
+bool Clients::add (int identifier, string client, string user)
 {
     if ((identifier > max_identifier) || (identifier < min_identifier))
         return false;

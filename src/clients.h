@@ -22,7 +22,7 @@ private:
 
 public:
     Clients();
-    bool addClient (int identifier, string client, string user);
+    bool add (int identifier, string client, string user);
     string createClientName();
 };
 
