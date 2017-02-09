@@ -1,9 +1,22 @@
 #include "clients.h"
 
-Clients::Clients()
+bool Clients::instanceFlag = false;
+Clients* Clients::single = nullptr;
+Clients* Clients::getInstance()
 {
-
+    if(! instanceFlag)
+    {
+        single = new Clients();
+        instanceFlag = true;
+        return single;
+    }
+    else
+    {
+        return single;
+    }
 }
+
+
 string Clients::createClientName()
 {
     int length = 10;
@@ -29,14 +42,20 @@ bool Clients::add (int identifier, string client, string user)
     if ((identifier > max_identifier) || (identifier < min_identifier))
         return false;
 
+    mutex.lock();
     it = mapClientUser.find(identifier);
     if (it != mapClientUser.end())
+    {
+        mutex.unlock();
+
         return false;
+    }
 
     ClientUser aux;
     aux.client = client;
     aux.user = user;
     mapClientUser[identifier] = aux;
 
+    mutex.unlock();
     return true;
 }

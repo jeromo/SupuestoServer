@@ -10,6 +10,8 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     clients.cpp \
-    server.cpp
+    server.cpp \
+    serverthread.cpp
 HEADERS += clients.h \
-    server.h
+    server.h \
+    serverthread.h

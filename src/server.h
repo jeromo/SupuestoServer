@@ -2,10 +2,23 @@
 #define SERVER_H
 
 #include <QTcpServer>
-#include <QNetworkSession>
 
-//! [0]
-class Server : public QObject
+class Server : public QTcpServer
+{
+    Q_OBJECT
+
+public:
+    Server(QObject *parent = 0);
+
+protected:
+    void incomingConnection(qintptr socketDescriptor) Q_DECL_OVERRIDE;
+
+private:
+    QStringList fortunes;
+};
+
+/*
+ * class Server : public QObject
 {
     Q_OBJECT
 
@@ -21,5 +34,5 @@ private:
     QStringList fortunes;
     QNetworkSession *networkSession;
 };
-
+*/
 #endif // SERVER_H
