@@ -19,6 +19,7 @@ Clients* Clients::getInstance()
 
 string Clients::createClientName()
 {
+    mutex.lock();
     int length = 10;
     char str[length];
     str[length-1] = '\0';
@@ -34,6 +35,7 @@ string Clients::createClientName()
             }
         }
     }
+    mutex.unlock();
 
     return string(str);
 }
@@ -57,5 +59,36 @@ bool Clients::add (int identifier, string client, string user)
     mapClientUser[identifier] = aux;
 
     mutex.unlock();
+
     return true;
+}
+
+void Clients::setLastTime(std::time_t now)
+{
+    mutex.lock();
+    last_time = now;
+    mutex.unlock();
+}
+
+std::time_t Clients::getLastTime()
+{
+    return last_time;
+}
+
+void Clients::report()
+{
+    mutex.lock();
+    std::cout << "Clients report" << std::endl;
+    for ( it = mapClientUser.begin(); it != mapClientUser.end(); it++ )
+    {
+        std::cout << it->first
+                  << ":"
+                  << it->second.client
+                  << ":"
+                  << it->second.user
+                  << std::endl ;
+
+    }
+    std::cout << std::flush;
+    mutex.unlock();
 }

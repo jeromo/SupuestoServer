@@ -4,6 +4,7 @@
 #include <QMutex>
 #include <iostream>
 #include <map>
+#include <ctime>
 
 using namespace std;
 
@@ -22,12 +23,16 @@ private:
     };
     map<int, ClientUser> mapClientUser;
     map<int, ClientUser>::iterator it;
+    std::time_t last_time;
     QMutex mutex;
 
 public:
     static Clients* getInstance();
     bool add (int identifier, string client, string user);
     string createClientName();
+    void setLastTime(std::time_t now);
+    std::time_t getLastTime();
+    void report();
 };
 
 #endif // CLIENTS_H

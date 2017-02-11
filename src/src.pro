@@ -11,7 +11,9 @@ TEMPLATE = app
 SOURCES += main.cpp \
     clients.cpp \
     server.cpp \
-    serverthread.cpp
+    connection.cpp \
+    finish.cpp
 HEADERS += clients.h \
     server.h \
-    serverthread.h
+    connection.h \
+    finish.h

@@ -17,22 +17,4 @@ private:
     QStringList fortunes;
 };
 
-/*
- * class Server : public QObject
-{
-    Q_OBJECT
-
-public:
-    explicit Server();
-
-private slots:
-    void sessionOpened();
-    void sendFortune();
-
-private:
-    QTcpServer *tcpServer;
-    QStringList fortunes;
-    QNetworkSession *networkSession;
-};
-*/
 #endif // SERVER_H
