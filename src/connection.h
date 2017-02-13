@@ -10,14 +10,16 @@ class Connection : public QThread
 
 public:
     Connection(int socketDescriptor, QObject *parent);
-    QString read(QTcpSocket *socket);
-    void write(QTcpSocket *socket, QString data);
+    QString read();
+    void write(QString data);
     void run() Q_DECL_OVERRIDE;
 
 
 private:
     int socketDescriptor;
     const int Timeout = 5 * 1000;
+    QTcpSocket socket;
+
 };
 
 #endif // CONNECTION_H

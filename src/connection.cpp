@@ -22,7 +22,6 @@ Connection::Connection(int socketDescriptor, QObject *parent)
 
 void Connection::run()
 {
-    QTcpSocket socket;
 
     if (!socket.setSocketDescriptor(socketDescriptor)) {
         std::cout << "EN setSocketDescriptor " << socket.errorString().toStdString() <<std::endl << std::flush;
@@ -34,7 +33,7 @@ void Connection::run()
 
     string client_name = clients->createClientName();
     while (socket.state() == QAbstractSocket::ConnectedState){
-        string data = read(&socket).toStdString();
+        string data = read().toStdString();
         if (socket.state() == QAbstractSocket::ConnectedState)
         {
 
@@ -43,11 +42,11 @@ void Connection::run()
             int identifier = std::stoi(s_identifier);
             if (clients->add(identifier, client_name, data.substr(position+1)))
             {
-                write(&socket, QString("OK"));
+                write(QString("OK"));
             }
             else
             {
-                write(&socket, QString("ERR"));
+                write(QString("ERR"));
             }
             clients->setLastTime(std::time(nullptr));
         }
@@ -56,21 +55,21 @@ void Connection::run()
     exit();
 }
 
-QString Connection::read(QTcpSocket *socket)
+QString Connection::read()
 {
-    if (socket ->state() != QAbstractSocket::ConnectedState)
+    if (socket.state() != QAbstractSocket::ConnectedState)
     {
         exit();
     }
 
     QString data;
-    QDataStream in(socket);
+    QDataStream in(&socket);
     in.setVersion(QDataStream::Qt_4_0);
 
 
     do {
-        if (!socket->waitForReadyRead(Timeout)) {
-            std::cout << "En waitForReadyRead " << socket->errorString().toStdString() <<std::endl << std::flush;
+        if (!socket.waitForReadyRead(Timeout)) {
+//            std::cout << "En waitForReadyRead " << socket.errorString().toStdString() <<std::endl << std::flush;
             exit(0);
 
             break;
@@ -84,12 +83,12 @@ QString Connection::read(QTcpSocket *socket)
     return data;
 }
 
-void Connection::write(QTcpSocket *socket, QString data)
+void Connection::write(QString data)
 {
     QByteArray block;
     QDataStream out(&block, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_4_0);
     out << data;
 
-    socket->write(block);
+    socket.write(block);
 }
